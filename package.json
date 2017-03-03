@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
+    "dev" : "tsc && cd ./src/telescopes/hubble && ng build && cd ../../.. && nf start",
     "postinstall" : "tsc"
   },
   "dependencies": {

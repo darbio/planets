@@ -1,4 +1,4 @@
-var request = require('request');
+import * as request from 'request';
 
 export class Encke {
   timer: any;
@@ -30,7 +30,7 @@ export class Encke {
 
   // Stops the comet process
   stop() {
-    clearInterval(timer);
+    clearInterval(this.timer);
   }
 
   // Processes a JSON file
