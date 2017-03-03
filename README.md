@@ -6,6 +6,9 @@ to survive.
 External influences, such as comets, can enter a solar system and provide input
 from elsewhere.
 
+Telescopes provide insight into objects in the solar system. Telescopes can be
+conceptualised in this example as user interfaces or reporting tools.
+
 ## Running the example
 
 This example uses node foreman to run the workers and web processes defined in
