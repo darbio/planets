@@ -16,7 +16,7 @@ the Procfile.
 
 To start the solution, run the following command:
 
-`nf start`
+`npm run dev`
 
 ## Technology
 
