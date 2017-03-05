@@ -4,11 +4,13 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev" : "tsc && cd ./src/telescopes/hubble && ng build && cd ../../.. && nf start",
-    "postinstall" : "tsc && cd ./src/telescopes/hubble && ng build"
+    "dev": "tsc && cd ./src/telescopes/hubble && ng build && cd ../../.. && nf start",
+    "postinstall": "tsc && cd ./src/telescopes/hubble && ng build"
   },
   "dependencies": {
     "@types/node": "^7.0.5",
+    "@types/nodemailer": "^1.3.32",
+    "@types/request": "0.0.40",
     "aws-sdk": "^2.22.0",
     "body-parser": "~1.16.0",
     "bunyan": "^1.8.5",
@@ -19,6 +21,7 @@
     "jade": "~1.11.0",
     "morgan": "~1.7.0",
     "node-redis-pubsub": "^1.0.2",
+    "nodemailer": "^3.1.4",
     "request": "^2.79.0",
     "serve-favicon": "~2.3.2"
   }
