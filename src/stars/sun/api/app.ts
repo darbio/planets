@@ -10,16 +10,18 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var complaints = require('./routes/complaints');
 
+import { ComplaintsService } from '../../../shared/services/complaints-service';
+import { Publisher } from '../../../shared/publisher';
+
 var app = express();
 
-// Inject publisher to api methods that need it
-// This instance of the publisher can now be accessed as middleware from the
-// api method using express-di
-import { Publisher } from '../../../shared/publisher';
-let publisher = new Publisher();
-app.factory('publisher', function(req, res, next) {
-  next(null, publisher);
-});
+// // Inject publisher to api methods that need it
+// // This instance of the publisher can now be accessed as middleware from the
+// // api method using express-di
+// let publisher = new Publisher();
+// app.factory('publisher', function(req, res, next) {
+//   next(null, publisher);
+// });
 
 // Inject bunyan logger to api methods that need it
 import * as bunyan from 'bunyan';
@@ -29,6 +31,13 @@ let bunyanLogger = bunyan.createLogger({
 app.factory('logger', function(req, res, next) {
   next(null, bunyanLogger);
 });
+
+// Inject our services
+let publisher = new Publisher();
+let complaintsService = new ComplaintsService(publisher);
+app.factory('complaintsService', function(req, res, next) {
+  next(null, complaintsService);
+})
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

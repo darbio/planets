@@ -2,59 +2,29 @@ var express = require('express');
 var router = express.Router();
 import * as uuid from 'uuid';
 import { NewComplaintEvent, NewComplaintEventParams } from '../../../../flares/new-complaint';
-
-var complaints: any = [];
+import { ComplaintsService } from '../../../../shared/services/complaints-service';
 
 /* GET complaints */
-router.get('/', function(req, res, next) {
-  res.json(complaints);
+router.get('/', function(complaintsService: ComplaintsService, req, res, next) {
+  res.json(complaintsService.getList());
 });
 
 /* GET complaint by id */
-router.get('/:id', function(req, res, next) {
-  let complaint = complaints.filter((complaint) => {
-    return complaint.id == req.params["id"];
-  });
-  res.json(complaint[0]);
+router.get('/:id', function(complaintsService: ComplaintsService, req, res, next) {
+  let complaint = complaintsService.getById(req.params["id"]);
+  res.json(complaint);
 });
 
 /* POST complaint */
-router.post('/', function(publisher, logger, req, res, next) {
-  // Validate the input
-  // TODO
-
-  // Persist the complaint to the database
-  let complaint = req.body;
-  complaint.id = uuid.v4(); // Add a unique id
-  complaints.push(complaint);
-
-  // Put an event on our event queue
-  let eventParams: NewComplaintEventParams = {
-    complaint_id : complaint.id
-  };
-  publisher.publish(new NewComplaintEvent(eventParams));
-
-  res.json({ success : true });
+router.post('/', function(complaintsService: ComplaintsService, logger, req, res, next) {
+  let id = complaintsService.create(req.body);
+  res.json(id);
 });
 
 /* PUT complaint */
-router.put('/:id', function(publisher, logger, req, res, next) {
-  function extend(obj, src) {
-    for (var key in src) {
-      if (src.hasOwnProperty(key)) obj[key] = src[key];
-    }
-    return obj;
-  }
-
-  // Retrieve from the database
-  let index = this.complaints.indexOf(complaints.filter((complaint) => {
-    return complaint.id == req.params["id"];
-  })[0]);
-
-  // Extend the existing object
-  this.complaints[index] = extend(this.complaints[index], req.body);
-
-  res.json(this.complaints[index]);
+router.put('/:id', function(complaintsService: ComplaintsService, logger, req, res, next) {
+  let id = complaintsService.update(req.body);
+  res.json(id);
 });
 
 module.exports = router;
