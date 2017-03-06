@@ -71,7 +71,7 @@ export class Encke {
   // Processes a JSON file
   process(body: any) {
     // Do something here
-    var complaint = body.message;
+    var complaint = JSON.parse(body.message);
 
     // Send to the sun
     request.post({
