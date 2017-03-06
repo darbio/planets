@@ -46,7 +46,7 @@ export class Encke {
             this.logger.info(`Processing message`, message);
 
             // Process the message
-            this.process(message);
+            this.process(message.Body);
 
             // Remove the message from the queue
             this.sqs.deleteMessage(
@@ -69,14 +69,14 @@ export class Encke {
   }
 
   // Processes a JSON file
-  process(complaint) {
+  process(body: any) {
     // Do something here
-    var processedComplaint = complaint;
+    var complaint = body.message;
 
     // Send to the sun
     request.post({
       url : 'http://localhost:3000/api/v1/comets',
-      body : processedComplaint,
+      body : complaint,
       json : true
     },
     (err, httpResponse, body) => {
