@@ -37,4 +37,24 @@ router.post('/', function(publisher, logger, req, res, next) {
   res.json({ success : true });
 });
 
+/* PUT complaint */
+router.put('/:id', function(publisher, logger, req, res, next) {
+  function extend(obj, src) {
+    for (var key in src) {
+      if (src.hasOwnProperty(key)) obj[key] = src[key];
+    }
+    return obj;
+  }
+
+  // Retrieve from the database
+  let index = this.complaints.indexOf(complaints.filter((complaint) => {
+    return complaint.id == req.params["id"];
+  })[0]);
+
+  // Extend the existing object
+  this.complaints[index] = extend(this.complaints[index], req.body);
+
+  res.json(this.complaints[index]);
+});
+
 module.exports = router;
