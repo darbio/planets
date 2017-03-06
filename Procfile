@@ -1,5 +1,5 @@
 # stars
-sun: node ./dist/sun/api/bin/www
+sun: node ./dist/stars/sun/api/bin/www
 
 # planets
 mercury: node ./dist/planets/mercury/worker.js

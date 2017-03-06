@@ -8,14 +8,14 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
-var comets = require('./routes/comets');
+var complaints = require('./routes/complaints');
 
 var app = express();
 
 // Inject publisher to api methods that need it
 // This instance of the publisher can now be accessed as middleware from the
 // api method using express-di
-import { Publisher } from '../../shared/publisher';
+import { Publisher } from '../../../shared/publisher';
 let publisher = new Publisher();
 app.factory('publisher', function(req, res, next) {
   next(null, publisher);
@@ -43,7 +43,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/api/v1/comets', comets);
+app.use('/api/v1/complaints', complaints);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

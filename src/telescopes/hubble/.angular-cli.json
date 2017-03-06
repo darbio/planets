@@ -7,7 +7,7 @@
   "apps": [
     {
       "root": "src",
-      "outDir": "../../../dist/sun/api/public",
+      "outDir": "../../../dist/stars/sun/api/public",
       "assets": [
         "assets",
         "favicon.ico"

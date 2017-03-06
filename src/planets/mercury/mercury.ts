@@ -20,8 +20,8 @@ export class Mercury {
     }
     this.emailService = new SmtpEmailService(emailServiceParams);
 
-    this.logger.info('Subscribing to \'domain:v1:comet:received\'');
-    this.subscriber = new Subscriber('domain:v1:comet:received');
+    this.logger.info('Subscribing to \'esafety:sol:sun:new_complaint\'');
+    this.subscriber = new Subscriber('esafety:sol:sun:new_complaint');
   }
 
   start() {
@@ -30,7 +30,7 @@ export class Mercury {
 
       let emailParams: IEmailMessageParams = {
         to: [
-          'james.darbyshire@esafety.gov.au'
+          'jamesdarbyshire@gmail.com'
         ],
         from: '"eSafety Australia" <no-reply@dev.cloud.esafety.gov.au>',
         subject: 'This is the subject',

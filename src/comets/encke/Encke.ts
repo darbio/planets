@@ -78,7 +78,7 @@ export class Encke {
 
     // Send to the sun
     request.post({
-      url : `${process.env.SUN_URI}/api/v1/comets`,
+      url : `${process.env.SUN_URI}/api/v1/complaints`,
       body : complaint,
       json : true
     },
