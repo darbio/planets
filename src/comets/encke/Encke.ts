@@ -1,36 +1,71 @@
 import * as request from 'request';
+import * as AWS from 'aws-sdk';
+import * as bunyan from 'bunyan';
 
 export class Encke {
-  timer: any;
+  is_started: boolean = false;
+  sqs: AWS.SQS;
+  logger: bunyan = bunyan.createLogger({ name : 'Comet Encke' });
 
   constructor() {
-    console.log("Starting comet: Encke");
+    this.logger.info("Starting comet: Encke");
+
+    let config: AWS.ClientConfigPartial = {
+      credentials: new AWS.Credentials(process.env.AWS_ACCESS_KEY_ID, process.env.AWS_SECRET_ACCESS_KEY)
+    };
+    AWS.config.update(config);
+
+    this.sqs = new AWS.SQS();
   }
 
   // Starts the comet process
   start() {
-    // Fakes it for now
-    // TODO retrieve from S3 on SNS notification
-    var that = this;
-    this.timer = setInterval(function() {
-      var complaint = {
-        type : "Online content",
-        from : {
-          name : "John Doe",
-          email : "john.doe@live.com"
-        },
-        attachments : [
-          "https://s3.aws.amazon.com/foo/bar.jpg"
-        ]
-      };
-
-      that.process(complaint);
-    }, 10000);
+    this.logger.info('Starting queue listener');
+    this.is_started = true;
+    this.receiveMessages();
   }
 
   // Stops the comet process
   stop() {
-    clearInterval(this.timer);
+    this.logger.info('Stopping queue listener');
+    this.is_started = false;
+  }
+
+  receiveMessages() {
+    this.sqs.receiveMessage(
+      {
+        QueueUrl: process.env.ENCKE_SQS_QUEUE_URL,
+        WaitTimeSeconds: 20 // Long polling
+      },
+      (err: any, data: any) => {
+        // Process the data
+        if (data.Messages && data.Messages.length > 0) {
+          this.logger.info(`Retrieved ${data.Messages.length} messages from queue`);
+
+          for (let message of data.Messages) {
+            this.logger.info(`Processing message`, message);
+
+            // Process the message
+            this.process(message);
+
+            // Remove the message from the queue
+            this.sqs.deleteMessage(
+              {
+                QueueUrl: process.env.ENCKE_SQS_QUEUE_URL,
+                ReceiptHandle: message.ReceiptHandle
+              },
+              (err, data) => {
+                console.info(`Deleted message`, data)
+              }
+            );
+          }
+        }
+
+        if (this.is_started) {
+          this.receiveMessages();
+        }
+      }
+    );
   }
 
   // Processes a JSON file

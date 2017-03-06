@@ -6,15 +6,11 @@ import { IEmailService } from '../../shared/email/IEmailService'
 import { ISmtpEmailServiceParams, SmtpEmailService } from '../../shared/email/SmtpEmailService'
 
 export class Mercury {
-  logger: bunyan;
+  logger: bunyan = bunyan.createLogger({ name : 'Planet Mercury' });
   subscriber: Subscriber;
   emailService: IEmailService;
 
   constructor() {
-    this.logger = bunyan.createLogger({
-      name : 'Planet Mercury'
-    });
-
     let emailServiceParams: ISmtpEmailServiceParams = {
       host: process.env.SMTP_HOST,
       username: process.env.SMTP_USERNAME,
@@ -34,7 +30,7 @@ export class Mercury {
 
       let emailParams: IEmailMessageParams = {
         to: [
-          'jamesdarbyshire@gmail.com'
+          'james.darbyshire@esafety.gov.au'
         ],
         from: '"eSafety Australia" <no-reply@dev.cloud.esafety.gov.au>',
         subject: 'This is the subject',
