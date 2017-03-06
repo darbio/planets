@@ -10,6 +10,14 @@ router.get('/', function(req, res, next) {
   res.json(complaints);
 });
 
+/* GET complaint by id */
+router.get('/:id', function(req, res, next) {
+  let complaint = complaints.filter((complaint) => {
+    return complaint.id == req.params["id"];
+  });
+  res.json(complaint[0]);
+});
+
 /* POST complaint */
 router.post('/', function(publisher, logger, req, res, next) {
   // Validate the input

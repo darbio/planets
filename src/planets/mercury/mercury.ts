@@ -1,5 +1,6 @@
 import * as bunyan from 'bunyan';
 import { Subscriber } from '../../shared/subscriber';
+import { NewComplaintEvent } from '../../flares/new-complaint';
 
 import { EmailMessage, IEmailMessageParams } from '../../shared/email/EmailMessage'
 import { IEmailService } from '../../shared/email/IEmailService'
@@ -20,8 +21,8 @@ export class Mercury {
     }
     this.emailService = new SmtpEmailService(emailServiceParams);
 
-    this.logger.info('Subscribing to \'esafety:sol:sun:new_complaint\'');
-    this.subscriber = new Subscriber('esafety:sol:sun:new_complaint');
+    this.logger.info(`Subscribing to '${NewComplaintEvent.event_name}'`);
+    this.subscriber = new Subscriber(NewComplaintEvent.event_name);
   }
 
   start() {

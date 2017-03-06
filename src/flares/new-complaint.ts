@@ -5,8 +5,9 @@ export interface NewComplaintEventParams {
 }
 
 export class NewComplaintEvent implements IDomainEvent {
-  name: string = `esafety:sol:sun:new_complaint`;
-  
+  static event_name: string = `esafety:sol:sun:new_complaint`;
+  name: string = NewComplaintEvent.event_name;
+
   complaint_id: string;
 
   constructor(params: NewComplaintEventParams) {
