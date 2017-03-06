@@ -1,3 +1,11 @@
+export interface IEmailMessageParams {
+  to: string[]
+  from: string
+  subject: string
+  text: string
+  html: string
+}
+
 export class EmailMessage {
   to: string[];
   from: string;
@@ -5,11 +13,11 @@ export class EmailMessage {
   text: string;
   html: string;
 
-  constructor(to: string[], from: string, subject: string, text: string, html: string) {
-    this.to = to;
-    this.from = from;
-    this.subject = subject;
-    this.text = text;
-    this.html = html;
+  constructor(params: IEmailMessageParams) {
+    this.to = params.to;
+    this.from = params.from;
+    this.subject = params.subject;
+    this.text = params.text;
+    this.html = params.html;
   }
 }

@@ -2,17 +2,27 @@ import { IEmailService } from './IEmailService';
 import { EmailMessage } from './EmailMessage';
 
 import * as nodemailer from 'nodemailer';
+import * as bunyan from 'bunyan';
+
+export interface ISmtpEmailServiceParams {
+  host: string
+  username: string
+  password: string
+  port: number
+  secure: boolean
+}
 
 export class SmtpEmailService implements IEmailService {
   transporter: nodemailer.Transporter;
+  logger: bunyan = bunyan.createLogger({ name : 'SmtpEmailService' });
 
-  constructor(host: string, username: string = null, password: string = null, port: number = 25, secure: boolean = false) {
+  constructor(params: ISmtpEmailServiceParams) {
     this.transporter = nodemailer.createTransport({
-      host: host,
-      port: port,
+      host: params.host,
+      port: params.port,
       auth: {
-        user: username,
-        pass: password
+        user: params.username,
+        pass: params.password
       }
     });
   }
@@ -30,9 +40,10 @@ export class SmtpEmailService implements IEmailService {
     // send mail with defined transport object
     this.transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
-          return console.log(error);
+        throw error;
       }
-      console.log('Message %s sent: %s', info.messageId, info.response);
+
+      this.logger.trace('Message %s sent: %s', info.messageId, info.response);
     });
   }
 }
