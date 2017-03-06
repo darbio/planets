@@ -15,14 +15,6 @@ import { Publisher } from '../../../shared/publisher';
 
 var app = express();
 
-// // Inject publisher to api methods that need it
-// // This instance of the publisher can now be accessed as middleware from the
-// // api method using express-di
-// let publisher = new Publisher();
-// app.factory('publisher', function(req, res, next) {
-//   next(null, publisher);
-// });
-
 // Inject bunyan logger to api methods that need it
 import * as bunyan from 'bunyan';
 let bunyanLogger = bunyan.createLogger({

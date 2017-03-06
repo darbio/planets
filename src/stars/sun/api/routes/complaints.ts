@@ -16,13 +16,13 @@ router.get('/:id', function(complaintsService: ComplaintsService, req, res, next
 });
 
 /* POST complaint */
-router.post('/', function(complaintsService: ComplaintsService, logger, req, res, next) {
+router.post('/', function(complaintsService: ComplaintsService, req, res, next) {
   let id = complaintsService.create(req.body);
   res.json(id);
 });
 
 /* PUT complaint */
-router.put('/:id', function(complaintsService: ComplaintsService, logger, req, res, next) {
+router.put('/:id', function(complaintsService: ComplaintsService, req, res, next) {
   let id = complaintsService.update(req.body);
   res.json(id);
 });

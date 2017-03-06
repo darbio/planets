@@ -2,8 +2,11 @@ import { Complaint } from '../model/complaint';
 import { Publisher } from '../publisher';
 import { NewComplaintEvent, NewComplaintEventParams } from '../../flares/new-complaint';
 import * as uuid from 'uuid';
+import * as bunyan from 'bunyan';
 
 export class ComplaintsService {
+  logger: bunyan = bunyan.createLogger({ name : 'ComplaintsService' });
+  
   complaints: Complaint[] = [];
   publisher: Publisher;
 
