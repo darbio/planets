@@ -70,12 +70,15 @@ export class Encke {
 
   // Processes a JSON file
   process(message: any) {
-    // Do something here
+    // Extract the complaint from the message body
     var complaint = JSON.parse(message.Body);
+
+    // Validate the complaint
+    // TODO
 
     // Send to the sun
     request.post({
-      url : 'http://localhost:3000/api/v1/comets',
+      url : `${process.env.SUN_URI}/api/v1/comets`,
       body : complaint,
       json : true
     },
