@@ -31,9 +31,9 @@ export class Mercury {
 
       let emailParams: IEmailMessageParams = {
         to: [
-          'jamesdarbyshire@gmail.com'
+          process.env.MERCURY_EMAIL_TO
         ],
-        from: '"eSafety Australia" <no-reply@dev.cloud.esafety.gov.au>',
+        from: process.env.MERCURY_EMAIL_FROM,
         subject: 'This is the subject',
         text: 'This is the email text.',
         html: '<p>This is the email HTML</p>'
