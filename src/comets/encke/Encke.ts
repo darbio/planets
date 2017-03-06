@@ -46,7 +46,7 @@ export class Encke {
             this.logger.info(`Processing message`, message);
 
             // Process the message
-            this.process(message.Body);
+            this.process(message);
 
             // Remove the message from the queue
             this.sqs.deleteMessage(
@@ -69,9 +69,9 @@ export class Encke {
   }
 
   // Processes a JSON file
-  process(body: any) {
+  process(message: any) {
     // Do something here
-    var complaint = JSON.parse(body.message);
+    var complaint = JSON.parse(message.Body);
 
     // Send to the sun
     request.post({

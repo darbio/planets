@@ -1,0 +1,27 @@
+{
+  "type" : "hedgehog_complaint",
+  "submitted" : "2017-01-27 00:00:00",
+  "data" : {
+    "complainant" : {
+      "first_name" : "Roger",
+      "last_name" : "Rabbit",
+      "email_address" : "roger@acme.com"
+    },
+    "details" : "I was browsing the internet for pictures of cute hedhehogs and I found these.",
+    "locators" : [
+      {
+        "type" : "image",
+        "uri" : "http://images.mentalfloss.com/sites/default/files/styles/insert_main_wide_image/public/istock_000048297906_small.jpg"
+      },
+      {
+        "type" : "image",
+        "uri" : "http://images.mentalfloss.com/sites/default/files/styles/insert_main_wide_image/public/istock_000012121978_small_0.jpg"
+      },
+      {
+        "type" : "webpage",
+        "uri" : "http://mentalfloss.com/article/56004/16-fun-facts-about-hedgehogs"
+      }
+    ],
+    "type" : "hedgehogs"
+  }
+}
